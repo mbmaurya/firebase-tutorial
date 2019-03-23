@@ -1,0 +1,22 @@
+{
+  "name": "firebase-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mbmaurya/firebase-tutorial.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mbmaurya/firebase-tutorial/issues"
+  },
+  "homepage": "https://github.com/mbmaurya/firebase-tutorial#readme",
+  "dependencies": {
+    "http-server": "^0.11.1"
+  }
+}
