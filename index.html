@@ -1,14 +1,13 @@
 <html>
     <head>
         <title>Firebase Tutorial</title>
-
-
-
+        <link type="text/css" rel="stylesheet" href="app.css" />
         <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
-        <script src="firebase-config.js"></script>
-        <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+        
+        <!-- <script src="firebase-config.js"></script> -->
+        <!-- <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
         <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
-        <script src="auth-config.js"></script>
+        <script src="auth-config.js"></script> -->
         
         <!-- <script src="https://smartlock.google.com/client"></script> -->
         <!-- <script>
@@ -72,10 +71,25 @@
     </head>
     <body>
 
-
         <h1>Welcome to My Awesome App</h1>
-        <div id="firebaseui-auth-container"></div>
+        <!-- <div id="firebaseui-auth-container"></div> -->
 
+        <!-- <form id="signUpForm"> -->
+            <input type="email" name="email" id="email" placeholder="Enter your email id" required>
+
+            <input type="password" name="password" id="password" placeholder="Enter your password" required>
+
+            <button type="button" id="signup">Sign Up</button>
+
+            <button id="signin">Sign In</button>
+
+            <button type="button" id="signout">Log Out</button>
+        <!-- </form> -->
+
+        <!-- <div id="userData"></div> -->
+
+        <script src="app.js"></script>
+        
 
 
     </body>
