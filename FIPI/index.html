@@ -3,9 +3,23 @@
         <title>Firebase Tutorial</title>
         <!-- <link type="text/css" rel="stylesheet" href="app.css" /> -->
         <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
+        <meta name="google-signin-client_id" content="209135031424-ajnjdgdnmiec3bl6s1n5n35fbg8aogj7.apps.googleusercontent.com">
+        <meta name="google-signin-cookiepolicy" content="single_host_origin">
+        <meta name="google-signin-scope" content="https://www.googleapis.com/auth/plus.login">
+        <style>
+            .hide { display: none; }
+        </style>
     </head>
     <body>
         <h1>Welcome to My Awesome App</h1>
+        <button id="popupSignIn">SignIn With Popup(Google)</button>
+        <button id="redirectSignIn">SignIn With Redirect(Google)</button>
+        <br/><br/>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <button id="userProfile">Get Profile</button>
+        <div id="userData"></div>
+        <a href="#" onclick="signOutUser()" id="signOut" class="hide">Sign out</a>
 
         <script src="app.js"></script>
     </body>
