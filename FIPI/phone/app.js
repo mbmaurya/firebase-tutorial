@@ -12,38 +12,30 @@
     };
     firebase.initializeApp(config);
 
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
     var btnLogNumber = document.getElementById('logNumber');
-    // var inpOtp = document.getElementById('otp');
-    var btnVerifyCode = document.getElementById('verifyCode');
 
     btnLogNumber.addEventListener('click', e => {
+        window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container');
         var phoneNumber = document.getElementById('phone').value;
         var appVerifier = window.recaptchaVerifier;
         firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
-            .then(function(){                
-                document.getElementById('phone').classList.add('hide');
-                document.getElementById('logNumber').classList.add('hide');
-                document.getElementById('otp').remove('hide');
-                document.getElementById('verifyCode').remove('hide');
+            .then(function(confirmationResult){
+                window.confirmationResult = confirmationResult;
+                var code = prompt('Enter OTP', '');
+                confirmationResult.confirm(code).then(function(result){
+                    var user = result.user;
+                    console.log(`Sign in successfull, ${user}`);
+                }).catch(function(error){
+                    console.log(error.code + error.message);
+                })
             }).catch(function(error){
-                console.log(error.message + error.code);
+                console.log(error.code, error.message);
+                window.recaptchaVerifier.render().then(function(widgetId){
+                    grecaptcha.reset(widgetId);
+                })
             })
-        console.log(`Phone: ${phoneNumber}`);
     })
 
-    btnVerifyCode.addEventListener('click', e => {
-        var code = document.getElementById('otp').value;
-        consifrmationResult.confirm(code).then(function(result){
-            var user = result.user;
-            console.log(user);
-        }).catch(function(error){
-            console.log(error.message + error.code);
-        })
-    })
-    
-    
-    
 
 }());
 
