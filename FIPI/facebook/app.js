@@ -24,13 +24,39 @@
             var user = result.user;
             console.log(`Token: ${token} \n User: ${JSON.stringify(user)}`);
         }).catch(function(error){
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            var email = error.email;
-            var credential = error.credential;
-            console.log(`Error \n Code: ${errorCode} \n Message: ${errorMessage} \n Email: ${email} \n Credential: ${credential}`);
+            // var errorCode = error.code;
+            // var errorMessage = error.message;
+            // var email = error.email;
+            // var credential = error.credential;
+            // console.log(`Error \n Code: ${errorCode} \n Message: ${errorMessage} \n Email: ${email} \n Credential: ${credential}`);
+            if(error.code === 'auth/account-exists-with-different-credential'){
+                var pendingCred = error.credential;
+                var email = error.email;
+                firebase.auth().fetchSignInMethodsForEmail(email).then(function(methods){
+                    if(methods[0] === 'password'){
+                        var password = promptUserForPassword();
+                        auth.signInWithEmailAndPassword(email, password).then(function(user){
+                            return user.linkWithCredential(pendingCred);
+                        }).then(function(){
+                            goToApp();
+                        });
+                        return;
+                    }
+
+                    // var provider = getProviderForProviderId(methods[0]);
+                    firebase.auth().signInWithPopup(provider).then(function(result){
+                        result.user.linkAndRetrieveDataWithCredential(pendingCred).then(function() {
+                            goToApp();
+                        });
+                    });
+                });
+            }
         })
     })
+
+    function goToApp() {
+        console.log('Reached goToApp');
+    }
 
     btnSignOut.addEventListener('click', e => {
         firebase.auth().signOut().then(function() {

@@ -29,8 +29,13 @@
             var email = error.email;
             var credential = error.credential;
             console.log(`Error \n Code: ${errorCode} \n Message: ${errorMessage} \n Email: ${email} \n Credential: ${credential}`);
+            
         })
-    })
+    });
+
+    function goToApp() {
+        console.log('Reached goToApp');
+    }
 
     btnSignOut.addEventListener('click', e => {
         firebase.auth().signOut().then(function() {
