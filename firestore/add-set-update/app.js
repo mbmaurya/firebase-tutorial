@@ -18,6 +18,9 @@ var db = firebase.firestore();
 var btnAddData = document.getElementById('addData');
 var btnGetData = document.getElementById('getData');
 var btnSetData = document.getElementById('setData');
+var btnUpdateData = document.getElementById('updateData');
+var btnArray = document.getElementById('array');
+var btnIncrement = document.getElementById('increment');
 
 btnAddData.addEventListener('click', e => {
     db.collection("users").add({
@@ -57,22 +60,71 @@ btnSetData.addEventListener('click', function(){
     })
 })
 
-var docData = {
-    stringExample: "Hello World!",
-    booleanExample: true,
-    numberExample: firebase.firestore.Timestamp.fromDate(new Date("December 10, 1815")),
-    arrayExample: null,
-    objectExample: {
-        a: 5,
-        b: {
-            nested: "foo"
-        }
-    }
-};
+// var docData = {
+//     stringExample: "Hello World!",
+//     booleanExample: true,
+//     numberExample: firebase.firestore.Timestamp.fromDate(new Date("December 10, 1815")),
+//     arrayExample: null,
+//     objectExample: {
+//         a: 5,
+//         b: {
+//             nested: "foo"
+//         }
+//     }
+// };
 
-db.collection("data").doc("one").set(docData).then(function(){
-    console.log("Document sussessfully written!");
-});
+// db.collection("data").doc("one").set(docData).then(function(){
+//     console.log("Document sussessfully written!");
+// });
+
+btnUpdateData.addEventListener('click', function(){
+    var miamiRef = db.collection("cities").doc("LA");
+
+    return miamiRef.update({
+        capital: false,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    })
+    .then(function(){
+        console.log("Document successfully updated!");
+    })
+    .catch(function(error){
+        console.error("Error updating document: ", error);
+    });
+})
+
+btnArray.addEventListener('click', function(){
+    var miamiRef = db.collection("cities").doc("LA");
+
+    miamiRef.update({
+        regions: firebase.firestore.FieldValue.arrayUnion("greater_virginia")
+    });
+
+    miamiRef.update({
+        regions: firebase.firestore.FieldValue.arrayRemove("east_coast")
+    })
+    .then(function(){
+        console.log("Document successfully updated!");
+    })
+    .catch(function(error){
+        console.error("Error updating document: ", error);
+    });
+})
+
+btnIncrement.addEventListener('click', function(){
+    var miamiRef = db.collection("cities").doc("LA");
+
+    miamiRef.update({
+        population: firebase.firestore.FieldValue.increment(50)
+    })
+    .then(function(){
+        console.log("Population incremented successfully");
+    })
+    .catch(function(error){
+        console.error("Update failed with error: ", error);
+    })
+})
+
+
 
 
 
